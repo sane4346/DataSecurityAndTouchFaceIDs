@@ -17,12 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let navigationController = self.window?.rootViewController as? UINavigationController
+        let controller = navigationController?.topViewController as? StartViewController
+        controller?.managedObjectContext = self.persistentContainer.viewContext
+        
+        prepareNavigationBarAppearance()
+        
+        navigationController?.navigationBar.barStyle = .blackOpaque
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        
+        UIApplication.shared.ignoreSnapshotOnNextApplicationLaunch()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -87,6 +96,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    func prepareNavigationBarAppearance()
+    {
+        let barColor = UIColor(red: 43.0 / 255.0, green: 43.0 / 255.0, blue: 43.0 / 255.0, alpha: 1.0)
+        
+        UINavigationBar.appearance().barTintColor = barColor
+        UINavigationBar.appearance().tintColor = .white
+        
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        let regularVertical = UITraitCollection(verticalSizeClass: .regular)
+        let titleDict: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white]
+        
+        UINavigationBar.appearance(for: regularVertical).titleTextAttributes = titleDict
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        UIToolbar.appearance().barTintColor = barColor
+        UIToolbar.appearance().tintColor = .white
     }
 
 }

@@ -7,9 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
-class ViewController: UIViewController {
 
+class StartViewController: UIViewController {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    var managedObjectContext : NSManagedObjectContext?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
